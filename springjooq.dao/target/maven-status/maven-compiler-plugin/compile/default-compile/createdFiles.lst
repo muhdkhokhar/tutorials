@@ -1,0 +1,14 @@
+spring\jooq\dao\generated\tables\records\AddressRecord.class
+spring\jooq\dao\generated\tables\Users.class
+spring\jooq\dao\generated\tables\pojos\Address.class
+spring\jooq\dao\generated\tables\Address.class
+spring\jooq\dao\generated\tables\pojos\Users.class
+spring\jooq\dao\generated\Keys$Identities0.class
+spring\jooq\dao\generated\Keys.class
+spring\jooq\dao\generated\Keys$UniqueKeys0.class
+spring\jooq\dao\generated\tables\records\UsersRecord.class
+spring\jooq\dao\generated\Tables.class
+spring\jooq\dao\generated\tables\daos\AddressDao.class
+spring\jooq\dao\generated\UserMgmt.class
+spring\jooq\dao\generated\Keys$ForeignKeys0.class
+spring\jooq\dao\generated\tables\daos\UsersDao.class
