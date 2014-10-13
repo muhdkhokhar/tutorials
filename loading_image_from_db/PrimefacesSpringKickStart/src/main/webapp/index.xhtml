@@ -1,0 +1,34 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+
+	<h:form id="form">
+
+		<p:dataTable value="#{userBean.userDetails}" var="user" id="dataTable">
+			<p:column headerText="Name">#{user.username}</p:column>
+
+			<p:column headerText="Address">#{user.address}</p:column>
+
+			<p:column headerText="Image">
+				<p:graphicImage value="#{imageBean.image}">
+					<f:param name="imageID" value="#{user.imageId}"></f:param>
+				</p:graphicImage>
+			</p:column>
+		</p:dataTable>
+		<p:separator></p:separator>
+
+		<p:commandButton value="Populate"
+			actionListener="#{userBean.fetchAllUsers}" update="form:dataTable"></p:commandButton>
+
+	</h:form>
+
+</h:body>
+</html>
