@@ -1,0 +1,41 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+
+	<h:outputText value="Welcome" />
+
+	<h:form id="userDetails">
+
+
+		<p:dataTable id="userDetailTable" value="#{userBean.userDetails}"
+			var="uDetail">
+
+			<p:column headerText="Username">
+			#{uDetail.userName	}
+			</p:column>
+			<p:column headerText="Address">
+			#{uDetail.address	}
+			</p:column>
+			<p:column headerText="Age">
+			#{uDetail.age	}
+			</p:column>
+		</p:dataTable>
+
+		<p:separator></p:separator>
+		<p:commandButton id="insertUserDetail" value="Add User"
+			actionListener="#{userBean.addUser}"></p:commandButton>
+
+
+
+	</h:form>
+
+</h:body>
+</html>

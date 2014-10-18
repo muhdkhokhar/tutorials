@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+	<context:property-placeholder location="classpath:application.properties" />
+	<tx:annotation-driven transaction-manager="txnMgr" />
+	<context:annotation-config></context:annotation-config>
+
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="poolName" value="testPool"></property>
+		<property name="dataSourceClassName"
+			value="org.postgresql.ds.PGSimpleDataSource">
+		</property>
+		<property name="registerMbeans" value="true"></property>
+		<property name="maximumPoolSize" value="10"></property>
+		<property name="dataSourceProperties">		
+			<props>
+				<prop key="url">${db.url}</prop>
+				<prop key="user">${db.username}</prop>
+				<prop key="password">${db.password}</prop>
+			</props>
+
+		</property>
+	</bean>
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
+		<constructor-arg ref="hikariConfig"></constructor-arg>
+	</bean>
+	<bean id="txnMgr"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<bean id="txnMgrAwareDS"
+		class="org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy">
+		<constructor-arg ref="dataSource"></constructor-arg>
+	</bean>
+	<bean id="connectionProvider" class="org.jooq.impl.DataSourceConnectionProvider">
+		<constructor-arg ref="txnMgrAwareDS"></constructor-arg>
+	</bean>
+	<bean id="config" class="org.jooq.impl.DefaultConfiguration">
+		<constructor-arg index="0" ref="connectionProvider"></constructor-arg>
+		<constructor-arg index="1">
+			<null></null>
+		</constructor-arg>
+		<constructor-arg index="2">
+			<null></null>
+		</constructor-arg>
+		<constructor-arg index="3">
+			<null></null>
+		</constructor-arg>
+		<constructor-arg index="4">
+			<null></null>
+		</constructor-arg>
+		<constructor-arg index="5">
+			<null></null>
+		</constructor-arg>
+		<constructor-arg index="6">
+			<value>POSTGRES</value>
+		</constructor-arg>
+		<constructor-arg index="7">
+			<null></null>
+		</constructor-arg>
+		<constructor-arg index="8">
+			<null></null>
+		</constructor-arg>
+	</bean>
+	<bean id="dsl" class="org.jooq.impl.DefaultDSLContext">
+		<constructor-arg ref="config"></constructor-arg>
+	</bean>
+	<bean id="perfBean" class="springjooq.dao.PerformanceServiceBean"></bean>
+</beans>
