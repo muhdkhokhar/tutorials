@@ -1,0 +1,79 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+	<style>
+.ui-paginator {
+	display: none !important;
+}
+</style>
+
+</h:head>
+
+<h:body>
+
+	<h:form id="quizForm">
+
+		<p:dataList value="#{qAppBean.samplequestions}" var="question"
+			widgetVar="dataList" type="definition" paginatorPosition="top"
+			paginator="true" rows="1" rowIndexVar="row">
+
+			<h:panelGrid columns="1">
+				<h:outputText value="Question Number #  #{row+1}" />
+
+				<h:outputText value="#{question.questionText}"
+					style="font-size:30px " />
+
+				<p:dataGrid columns="2" value="#{question.questionOptions}"
+					var="option">
+					<p:commandButton value="#{option.optionText}"
+						style="height:100px;width:300px"
+						action="#{qAppBean.moveToNextQuestion}">
+						<f:setPropertyActionListener target="#{question.selectedOption}"
+							value="#{option}" />
+
+						<f:setPropertyActionListener target="#{qAppBean.selectedOption}"
+							value="#{option}" />
+					</p:commandButton>
+
+
+				</p:dataGrid>
+
+			</h:panelGrid>
+
+		</p:dataList>
+
+		<p:commandButton update="result" widgetVar="resultButton"
+			oncomplete="PF('finalDialog').show();" value="Complete quiz"></p:commandButton>
+
+		<p:dialog id="result" modal="true" width="700" header="Results"
+			widgetVar="finalDialog" closable="true" resizable="no">
+
+			<h:outputText
+				value="Total correct answer = #{qAppBean.totalCorrAnswer}" />
+
+			<p:dataTable value="#{qAppBean.samplequestions}" var="question">
+
+				<p:column headerText="question">#{question.questionText}</p:column>
+				<p:column headerText="your answer">#{question.selectedOption.optionText}</p:column>
+				<p:column headerText="Outcome"
+					rendered="#{!question.selectedOption.answer}">Wrong</p:column>
+				<p:column headerText="Outcome"
+					rendered="#{question.selectedOption.answer}">Correct</p:column>
+
+
+
+
+			</p:dataTable>
+
+
+		</p:dialog>
+
+
+	</h:form>
+
+</h:body>
+</html>
