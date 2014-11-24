@@ -1,6 +1,11 @@
-This repository contains all the differnet projects including
+This repository contains all the different tutorials on different technologies e.g.
 
--primefaces 
--jooq 
+Java
+JSF 
+Primefaces
+Spring 
+MbBatis 
+ExtJs
+JOOQ
 
-and many more...
+and many more.
